@@ -55,7 +55,33 @@ export const constantRoutes = [
     }]
   },
 
+  {
+    path: '/banner',
+    component: Layout,
+    children: [
+      {
+        path: 'list',
+        name: 'BannerList',
+        component: () => import('@/views/banner/index'),
+        meta: { title: 'Banner管理', icon: 'el-icon-user-solid' }
+      },
+      {
+        path: 'create',
+        name: 'CreateBanner',
+        component: () => import('@/views/banner/create'),
+        meta: { title: '添加Banner', icon: 'tree' },
+        hidden: true
+      },
 
+      {
+        path: 'edit/:id(\\d+)',
+        name: 'EditBanner',
+        component: () => import('@/views/banner/edit'),
+        meta: { title: '编辑Banner', icon: 'tree' },
+        hidden: true
+      },
+    ]
+  },
 
   {
     path: '/admin',

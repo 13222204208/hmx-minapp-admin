@@ -7,7 +7,7 @@ import { getToken } from '@/utils/auth'
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
-  timeout: 5000 // request timeout
+  timeout: 9000 // request timeout
 })
 
 // request interceptor
@@ -45,9 +45,9 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
-    
+
     // if the custom code is not 20000, it is judged as an error.
-    if (res.code !== 1) {
+    if (res.code !== 1) {console.log(res);
       Message({
         message: res.msg || 'Error',
         type: 'error',
@@ -73,7 +73,7 @@ service.interceptors.response.use(
     }
   },
   error => {
-    console.log('err' + error) // for debug
+    console.log('err ' + error) // for debug
     Message({
       message: error.message,
       type: 'error',
