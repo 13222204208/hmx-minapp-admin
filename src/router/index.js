@@ -84,6 +84,146 @@ export const constantRoutes = [
   },
 
   {
+    path: '/activity',
+    component: Layout,
+    children: [
+      {
+        path: 'list',
+        name: 'ActivityList',
+        component: () => import('@/views/activity/list'),
+        meta: { title: '活动管理', icon: 'el-icon-user-solid' }
+      },
+      {
+        path: 'create',
+        name: 'CreateActivity',
+        component: () => import('@/views/activity/create'),
+        meta: { title: '添加活动', icon: 'tree' },
+        hidden: true
+      },
+
+      {
+        path: 'edit/:id(\\d+)',
+        name: 'EditActivity',
+        component: () => import('@/views/activity/edit'),
+        meta: { title: '编辑活动', icon: 'tree' },
+        hidden: true
+      },
+    ]
+  },
+
+  {
+    path: '/channel',
+    component: Layout,
+    children: [
+      {
+        path: 'list',
+        name: 'ChannelList',
+        component: () => import('@/views/channel/list'),
+        meta: { title: '频道管理', icon: 'el-icon-user-solid' }
+      },
+      {
+        path: 'create',
+        name: 'CreateChannel',
+        component: () => import('@/views/channel/create'),
+        meta: { title: '添加频道', icon: 'tree' },
+        hidden: true
+      },
+
+      {
+        path: 'edit/:id(\\d+)',
+        name: 'EditChannel',
+        component: () => import('@/views/channel/edit'),
+        meta: { title: '编辑频道', icon: 'tree' },
+        hidden: true
+      },
+    ]
+  },
+
+  {
+    path: '/content',
+    component: Layout,
+    children: [
+      {
+        path: 'list',
+        name: 'ContentList',
+        component: () => import('@/views/content/list'),
+        meta: { title: '内容管理', icon: 'el-icon-user-solid' }
+      },
+      {
+        path: 'create',
+        name: 'CreateContent',
+        component: () => import('@/views/content/create'),
+        meta: { title: '添加内容', icon: 'tree' },
+        hidden: true
+      },
+
+      {
+        path: 'edit/:id(\\d+)',
+        name: 'EditContent',
+        component: () => import('@/views/content/edit'),
+        meta: { title: '编辑内容', icon: 'tree' },
+        hidden: true
+      },
+    ]
+  },
+
+  {
+    path: '/course',
+    component: Layout,
+    children: [
+      {
+        path: 'list',
+        name: 'CourseList',
+        component: () => import('@/views/course/list'),
+        meta: { title: '课程管理', icon: 'el-icon-user-solid' }
+      },
+      {
+        path: 'create',
+        name: 'CreateCourse',
+        component: () => import('@/views/course/create'),
+        meta: { title: '添加课程', icon: 'tree' },
+        hidden: true
+      },
+
+      {
+        path: 'edit/:id(\\d+)',
+        name: 'EditCourse',
+        component: () => import('@/views/course/edit'),
+        meta: { title: '编辑课程', icon: 'tree' },
+        hidden: true
+      },
+    ]
+  },
+
+  {
+    path: '/affiche',
+    component: Layout,
+    children: [
+      {
+        path: 'list',
+        name: 'AfficheList',
+        component: () => import('@/views/affiche/list'),
+        meta: { title: '公告管理', icon: 'el-icon-user-solid' }
+      },
+      {
+        path: 'create',
+        name: 'CreateAffiche',
+        component: () => import('@/views/affiche/create'),
+        meta: { title: '添加公告', icon: 'tree' },
+        hidden: true
+      },
+
+      {
+        path: 'edit/:id(\\d+)',
+        name: 'EditAffiche',
+        component: () => import('@/views/affiche/edit'),
+        meta: { title: '编辑公告', icon: 'tree' },
+        hidden: true
+      },
+    ]
+  },
+
+  {
     path: '/admin',
     component: Layout,
     children: [
