@@ -2,8 +2,21 @@
  <div class="app-container">
 <el-form ref="form" :model="form" :rules="rules" label-width="80px">
 
-      <el-form-item label="公告内容" prop="content">
-        <el-input type="textarea" v-model="ruleForm.content"></el-input>
+      <el-form-item label="公告内容" prop="content"  required>
+        <el-input type="textarea" v-model="form.content"></el-input>
+      </el-form-item>
+
+      <el-form-item label="公告时间" required>
+            <el-date-picker
+              v-model="form.time"
+              type="datetimerange"
+              align="left"
+              size="large"
+              value-format="yyyy-MM-dd HH:mm:ss"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              :default-time="['12:00:00', '08:00:00']">
+            </el-date-picker>
       </el-form-item>
 
   <el-form-item>
@@ -34,8 +47,8 @@ export default {
       editor:null,//编辑器实例
       form:{
         id:'',
-        sort:'',
-        img_url:'',
+        content:'',
+        time:'',
       },
         rules: {
           sort: [
@@ -60,11 +73,13 @@ export default {
   methods: {
 
     fetchData(id) {
-      editAffiche(id).then(response => {console.log(response)
+      editAffiche(id).then(response => {
         this.form.content= response.data.content;
-
+       var myArray=new Array()
+        myArray[0]=response.data.start_time
+        myArray[1]=response.data.stop_time
+        this.form.time= myArray
         this.form.id = response.data.id;
-        this.form.img_url = response.data.img_url;
       }).catch(err => {
         console.log(err)
       })
@@ -73,7 +88,7 @@ export default {
       handleRemove(file, fileList) {
         console.log(file, fileList);
       },
-      handlePictureCardPreview(file) { console.log(file.url)
+      handlePictureCardPreview(file) {
         this.dialogImageUrl = file.url;
         this.dialogVisible = true;
       },

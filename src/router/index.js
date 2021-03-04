@@ -63,7 +63,7 @@ export const constantRoutes = [
         path: 'list',
         name: 'BannerList',
         component: () => import('@/views/banner/index'),
-        meta: { title: 'Banner管理', icon: 'el-icon-user-solid' }
+        meta: { title: 'Banner管理', icon: 'el-icon-s-unfold' }
       },
       {
         path: 'create',
@@ -91,7 +91,7 @@ export const constantRoutes = [
         path: 'list',
         name: 'ActivityList',
         component: () => import('@/views/activity/list'),
-        meta: { title: '活动管理', icon: 'el-icon-user-solid' }
+        meta: { title: '活动管理', icon: 'el-icon-share' }
       },
       {
         path: 'create',
@@ -119,7 +119,7 @@ export const constantRoutes = [
         path: 'list',
         name: 'ChannelList',
         component: () => import('@/views/channel/list'),
-        meta: { title: '频道管理', icon: 'el-icon-user-solid' }
+        meta: { title: '频道管理', icon: 'el-icon-video-camera-solid' }
       },
       {
         path: 'create',
@@ -147,7 +147,7 @@ export const constantRoutes = [
         path: 'list',
         name: 'ContentList',
         component: () => import('@/views/content/list'),
-        meta: { title: '内容管理', icon: 'el-icon-user-solid' }
+        meta: { title: '内容管理', icon: 'el-icon-folder-opened' }
       },
       {
         path: 'create',
@@ -175,7 +175,7 @@ export const constantRoutes = [
         path: 'list',
         name: 'CourseList',
         component: () => import('@/views/course/list'),
-        meta: { title: '课程管理', icon: 'el-icon-user-solid' }
+        meta: { title: '课程管理', icon: 'el-icon-document-copy' }
       },
       {
         path: 'create',
@@ -203,7 +203,7 @@ export const constantRoutes = [
         path: 'list',
         name: 'AfficheList',
         component: () => import('@/views/affiche/list'),
-        meta: { title: '公告管理', icon: 'el-icon-user-solid' }
+        meta: { title: '公告管理', icon: 'el-icon-chat-line-round' }
       },
       {
         path: 'create',
