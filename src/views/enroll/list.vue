@@ -1,15 +1,10 @@
 <template>
  <div class="app-container">
       <div class="filter-container">
-         <el-input v-model="listQuery.title" placeholder="频道名称" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+         <el-input v-model="listQuery.phone" placeholder="联系方式" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
          <el-button v-waves class="filter-item" type="primary" style="margin-left: 10px;" icon="el-icon-search" @click="handleFilter">
            搜索
          </el-button>
-
-
-         <router-link :to="{name:'CreateChannel'}">
-          <el-button type="primary"  style="margin-left: 10px;"  plain>添加频道</el-button>
-          </router-link>
 
       </div>
       <br>
@@ -28,39 +23,47 @@
        </template>
      </el-table-column>
 
-     <el-table-column label="排序" align="center"  width="80">
+     <el-table-column label="少儿姓名" align="center">
        <template slot-scope="{row}">
-         <span>{{ row.sort }}</span>
+         <span>{{ row.children_name}}</span>
        </template>
      </el-table-column>
-     <el-table-column label="频道名称" align="center">
+     <el-table-column label="报名人姓名" align="center">
        <template slot-scope="{row}">
-         <span>{{ row.title}}</span>
+         <span>{{ row.enroll_name }}</span>
        </template>
      </el-table-column>
-     <el-table-column label="频道简介" align="center">
+     <el-table-column label="联系方式" align="center">
        <template slot-scope="{row}">
-         <span>{{ row.content}}</span>
+         <span>{{ row.phone }}</span>
        </template>
      </el-table-column>
-     <el-table-column label="创建时间" align="center">
+     <el-table-column label="报名的活动" align="center">
+       <template slot-scope="{row}">
+         <span>{{ row.activity.title }}</span>
+       </template>
+     </el-table-column>
+     <el-table-column label="提交时间" align="center">
        <template slot-scope="{row}">
          <span>{{ row.created_at }}</span>
        </template>
      </el-table-column>
-     <el-table-column label="是否首页推荐" align="center">
+     <el-table-column label="状态" class-name="status-col" align="center" width="80">
        <template slot-scope="{row}">
-         <span>{{ row.is_recommend?"已推荐":"未推荐" }}</span>
+         <el-tag  >
+           {{ row.status == 1 ? '已处理':'未处理' }}
+         </el-tag>
        </template>
      </el-table-column>
+
      <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
        <template slot-scope="{row,$index}">
-         <router-link :to="'edit/'+row.id">
-           <el-button type="primary" size="mini" style="margin-right: 5px;">
-             编辑
-           </el-button>
-         </router-link>
-
+          <el-button v-if="row.status ==1" size="mini" @click="handleModifyStatus(row,0)">
+            取消已处理
+          </el-button>
+          <el-button v-if="row.status ==0" size="mini" @click="handleModifyStatus(row,1)">
+            点击处理
+          </el-button>
          <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleDelete(row,$index)">
            删除
          </el-button>
@@ -72,7 +75,7 @@
 </template>
 
 <script>
-   import {channelList, delChannel} from '@/api/channel'
+   import {enrollList, updateEnroll, delEnroll} from '@/api/enroll'
    import waves from '@/directive/waves' // waves directive
    import Pagination from '@/components/Pagination' // secondary package based on el-pagination
   export default {
@@ -87,7 +90,7 @@
         listQuery: {
           page: 1,
           limit: 20,
-          title: undefined,
+          phone: undefined,
         },
         temp: {
           id: undefined,
@@ -110,7 +113,7 @@
       getList() {
         this.listLoading = true
         console.log(this.listQuery)
-        channelList(this.listQuery).then(response => {
+        enrollList(this.listQuery).then(response => {console.log(response)
           this.tableData = response.data.item;
           this.total = response.data.total;
 
@@ -136,12 +139,12 @@
 
       handleDelete(index, row) {
         console.log(index, row);
-        this.$confirm('此操作将永久删除频道及内容, 是否继续?', '提示', {
+        this.$confirm('此操作将永久删除, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          delChannel(index.id).then(response => {
+          delEnroll(index.id).then(response => {
           this.$notify({
             message: '删除成功',
             type: 'success',
@@ -155,8 +158,19 @@
             message: '已取消删除'
           });
         });
+      },
 
-      }
+      handleModifyStatus(row, status) {
+        row.status= status;
+        console.log(row);
+
+        updateEnroll(row.id,row).then(response => {
+          this.$message({
+            message: '操作成功',
+            type: 'success'
+          })
+        })
+      },
     }
   }
 </script>

@@ -1,15 +1,14 @@
 <template>
  <div class="app-container">
-<el-form ref="form" :model="form" :rules="rules" label-width="80px">
-  <el-form-item label="频道名称" prop="channel_id">
-    <el-select v-model="form.channel_id" placeholder="请选择频道" style="width: 58rem;">
-      <el-option v-for='item in option' :key='item.id' :value='item.id' :label='item.title'>  			</el-option>
+<el-form ref="form" :model="form" label-width="80px">
+  <el-form-item label="协议类型">
+    <el-select v-model="form.type" placeholder="请选择协议类型" style="width: 58rem;">
+      <el-option label="关于我们" value="about"></el-option>
+      <el-option label="隐私权益" value="privacy"></el-option>
     </el-select>
   </el-form-item>
-
-
-  <el-form-item label="文章标题" prop="title">
-    <el-input v-model="form.title" style="width: 58rem;"></el-input>
+  <el-form-item label="标题" prop="title"  style="width: 63rem;">
+    <el-input v-model="form.title"></el-input>
   </el-form-item>
     <div class="ckeditor" style="margin-left:10px; width:1000px">
       <!-- 工具栏容器 -->
@@ -33,66 +32,22 @@
 <script>
 import CKEditor from '@ckeditor/ckeditor5-build-decoupled-document'
 import '@ckeditor/ckeditor5-build-decoupled-document/build/translations/zh-cn'
-import { storeContent } from '@/api/content'
-import { channelList} from '@/api/channel'
+import { storeAgreement , delContact , updateContact} from '@/api/agreement'
 export default {
   data() {
-    const validateTitle = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error('请输入标题'))
-      } else {
-        callback()
-      }
-    }
     return {
       editor:null,//编辑器实例
       form:{
+        type:'',
         title:'',
         content:''
-      },
-        rules: {
-          title: [
-            { required:true,validator: validateTitle, trigger: 'blur' }
-          ],
-        },
-      option:[],
-      dialogImageUrl: '',
-      dialogVisible: false
+      }
     }
   },
   mounted() {
     this.initCKEditor()
   },
-  created() {
-    this.getList()
-  },
-
   methods: {
-    getList(){
-      channelList().then( response=>{
-        this.option = response.data;
-
-      })
-    },
-    uploadUrl() {
-        var url = process.env.VUE_APP_BASE_API+"/upload/img"// 生产环境和开发环境的判断
-        return url
-    },
-      handleRemove(file, fileList) {
-        console.log(file, fileList);
-      },
-      handlePictureCardPreview(file) { console.log(file.url)
-        this.dialogImageUrl = file.url;
-        this.dialogVisible = true;
-      },
-      handleUpSuccess(response){
-
-          if(response.uploaded == true){
-            this.form.cover = response.url;
-            console.log(this.form.cover);
-          }
-      },
-
     initCKEditor(){
       CKEditor.create(document.querySelector("#editor"),{
         language: 'zh-cn',
@@ -116,13 +71,13 @@ export default {
 
     onSubmit(){
       this.form.content = this.editor.getData();//富文本内容
-console.log(this.form);
-      storeContent(this.form).then(response => {
+      console.log(this.form);
+      storeAgreement(this.form).then(response => {
           this.$message({
             message: '创建成功',
             type: 'success'
           })
-          this.$router.push({name:'ContentList'})
+          this.$router.push({name:'AgreementList'})
         }
       );
     }

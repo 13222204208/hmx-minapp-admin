@@ -21,6 +21,9 @@
   <el-form-item label="频道名称" prop="title">
     <el-input v-model="form.title" style="width: 58rem;"></el-input>
   </el-form-item>
+    <el-form-item label="频道简介" prop="content">
+      <el-input type="textarea" v-model="form.content" style="width: 58rem;"></el-input>
+    </el-form-item>
 
 
     <el-form-item label="排序" prop="sort">
@@ -76,6 +79,7 @@ export default {
       form:{
         title:null,
         cover:null,
+        content:null,
         sort:'',
         is_recommend:null
       },

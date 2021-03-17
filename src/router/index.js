@@ -112,6 +112,20 @@ export const constantRoutes = [
   },
 
   {
+    path: '/enroll',
+    component: Layout,
+    children: [
+      {
+        path: 'list',
+        name: 'EnrollList',
+        component: () => import('@/views/enroll/list'),
+        meta: { title: '活动报名', icon: 'el-icon-c-scale-to-original' }
+      },
+
+    ]
+  },
+
+  {
     path: '/channel',
     component: Layout,
     children: [
@@ -218,6 +232,36 @@ export const constantRoutes = [
         name: 'EditAffiche',
         component: () => import('@/views/affiche/edit'),
         meta: { title: '编辑公告', icon: 'tree' },
+        hidden: true
+      },
+    ]
+  },
+
+  {
+    path: '/agreement',
+    component: Layout,
+    redirect: '/agreement/create',
+    name: 'Agreement',
+    meta: { title: '协议管理', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'create',
+        name: 'CreateAgreement',
+        component: () => import('@/views/agreement/create'),
+        meta: { title: '添加协议', icon: 'tree' },
+        hidden: true
+      },
+      {
+        path: 'list',
+        name: 'AgreementList',
+        component: () => import('@/views/agreement/list'),
+        meta: { title: '协议列表', icon: 'table' }
+      },
+      {
+        path: 'edit/:id(\\d+)',
+        component: () => import('@/views/agreement/edit'),
+        name: 'EditAgreement',
+        meta: { title: '编辑协议', noCache: true, activeMenu: '/agreement/list' },
         hidden: true
       },
     ]

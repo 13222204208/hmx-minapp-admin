@@ -154,7 +154,7 @@ export default {
         language: 'zh-cn',
         ckfinder:{
           // 后端处理上传逻辑返回json数据,包括uploaded(选项true/false)和url两个字段
-          uploadUrl:process.env.VUE_APP_BASE_API+"/upload/img",
+          uploadUrl:process.env.VUE_APP_BASE_API+"/upload/content/img",
         }
       }).then(editor => {console.log(editor);
         const toolbarContainer = document.querySelector('#toolbar-container');
