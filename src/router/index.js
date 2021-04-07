@@ -126,6 +126,20 @@ export const constantRoutes = [
   },
 
   {
+    path: '/order',
+    component: Layout,
+    children: [
+      {
+        path: 'list',
+        name: 'OrderList',
+        component: () => import('@/views/order/list'),
+        meta: { title: '订单管理', icon: 'el-icon-shopping-cart-full' }
+      },
+
+    ]
+  },
+
+  {
     path: '/channel',
     component: Layout,
     children: [
