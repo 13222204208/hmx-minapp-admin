@@ -112,6 +112,26 @@ export const constantRoutes = [
   },
 
   {
+    path: '/message',
+    component: Layout,
+    children: [
+      {
+        path: 'list',
+        name: 'MessageList',
+        component: () => import('@/views/message/list'),
+        meta: { title: '活动通知', icon: 'el-icon-chat-dot-round' }
+      },
+      {
+        path: 'create',
+        name: 'CreateMessage',
+        component: () => import('@/views/message/create'),
+        meta: { title: '添加通知' },
+        hidden: true
+      },
+    ]
+  },
+
+  {
     path: '/enroll',
     component: Layout,
     children: [
