@@ -16,8 +16,14 @@
       <el-dialog :visible.sync="dialogVisible">
         <img width="100%" :src="dialogImageUrl" alt="">
       </el-dialog>
-
   </el-form-item>
+
+  <el-form-item label="所属分类" prop="course_type_id">
+    <el-select v-model="form.course_type_id" placeholder="请选择分类" style="width: 58rem;">
+      <el-option v-for='item in option' :key='item.id' :value='item.id' :label='item.title'>  			</el-option>
+    </el-select>
+  </el-form-item>
+
   <el-form-item label="课程名称" prop="title">
     <el-input v-model="form.title" style="width: 58rem;"></el-input>
   </el-form-item>
@@ -54,6 +60,7 @@
 import CKEditor from '@ckeditor/ckeditor5-build-decoupled-document'
 import '@ckeditor/ckeditor5-build-decoupled-document/build/translations/zh-cn'
 import { storeCourse } from '@/api/course'
+import { courseTypeList } from '@/api/course_type'
 
 export default {
   data() {
@@ -90,6 +97,7 @@ export default {
         title:null,
         cover:null,
         content:null,
+        course_type_id:null,
         sort:null,
         price:null,
         is_recommend:null
@@ -101,6 +109,9 @@ export default {
           ],
           cover: [
             { required:true,message: '请上传封面图', trigger: 'blur' }
+          ],
+          course_type_id: [
+            { required:true,message: '请选择分类', trigger: 'blur' }
           ],
           content: [
             { required:true,message: '请填写简介', trigger: 'blur' }
@@ -118,9 +129,19 @@ export default {
   mounted() {
     this.initCKEditor()
   },
-
+  created() {
+    this.getList()
+  },
 
   methods: {
+    getList(){
+      courseTypeList().then( response=>{
+        console.log(response)
+        this.option = response.data;
+
+      })
+    },
+
     uploadUrl() {
         var url = process.env.VUE_APP_BASE_API+"/upload/img"// 生产环境和开发环境的判断
         return url
@@ -163,7 +184,6 @@ export default {
     onSubmit(){
       this.form.content = this.editor.getData();//富文本内容
 
-      //console.log(this.form);return false;
       storeCourse(this.form).then(response => {
           this.$message({
             message: '创建成功',

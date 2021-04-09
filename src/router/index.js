@@ -216,6 +216,34 @@ export const constantRoutes = [
   },
 
   {
+    path: '/course_type',
+    component: Layout,
+    children: [
+      {
+        path: 'list',
+        name: 'CourseTypeList',
+        component: () => import('@/views/course_type/list'),
+        meta: { title: '课程分类', icon: 'el-icon-video-camera-solid' }
+      },
+      {
+        path: 'create',
+        name: 'CreateCourseType',
+        component: () => import('@/views/course_type/create'),
+        meta: { title: '添加分类', icon: 'tree' },
+        hidden: true
+      },
+
+      {
+        path: 'edit/:id(\\d+)',
+        name: 'EditCourseType',
+        component: () => import('@/views/course_type/edit'),
+        meta: { title: '编辑分类', icon: 'tree' },
+        hidden: true
+      },
+    ]
+  },
+
+  {
     path: '/course',
     component: Layout,
     children: [

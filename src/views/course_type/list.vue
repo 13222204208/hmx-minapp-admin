@@ -1,15 +1,11 @@
 <template>
  <div class="app-container">
       <div class="filter-container">
-         <el-input v-model="listQuery.title" placeholder="课程名称" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-         <el-button v-waves class="filter-item" type="primary" style="margin-left: 10px;" icon="el-icon-search" @click="handleFilter">
-           搜索
-         </el-button>
 
-
-         <router-link :to="{name:'CreateCourse'}">
-          <el-button type="primary"  style="margin-left: 10px;"  plain>添加课程</el-button>
+         <router-link :to="{name:'CreateCourseType'}">
+          <el-button type="primary"  style="margin-left: 10px;"  plain>添加分类</el-button>
           </router-link>
+
       </div>
       <br>
    <el-table
@@ -26,36 +22,24 @@
          <span>{{ row.id }}</span>
        </template>
      </el-table-column>
-     <el-table-column label="排序" align="center">
+
+     <el-table-column label="排序" align="center"  width="80">
        <template slot-scope="{row}">
          <span>{{ row.sort }}</span>
        </template>
      </el-table-column>
-     <el-table-column label="课程名称" align="center">
+     <el-table-column label="分类名称" align="center">
        <template slot-scope="{row}">
          <span>{{ row.title}}</span>
        </template>
      </el-table-column>
-     <el-table-column label="所属分类" align="center">
-       <template slot-scope="{row}">
-         <span>{{ row.type.title}}</span>
-       </template>
-     </el-table-column>
-     <el-table-column label="价格" align="center">
-       <template slot-scope="{row}">
-         <span>{{ row.price }}</span>
-       </template>
-     </el-table-column>
+
      <el-table-column label="创建时间" align="center">
        <template slot-scope="{row}">
          <span>{{ row.created_at }}</span>
        </template>
      </el-table-column>
-     <el-table-column label="是否推荐" align="center">
-       <template slot-scope="{row}">
-         <span>{{ row.is_recommend?"已推荐":"未推荐" }}</span>
-       </template>
-     </el-table-column>
+
      <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
        <template slot-scope="{row,$index}">
          <router-link :to="'edit/'+row.id">
@@ -75,7 +59,7 @@
 </template>
 
 <script>
-   import {courseList, delCourse} from '@/api/course'
+   import {courseTypeList, delCourseType} from '@/api/course_type'
    import waves from '@/directive/waves' // waves directive
    import Pagination from '@/components/Pagination' // secondary package based on el-pagination
   export default {
@@ -113,8 +97,7 @@
       getList() {
         this.listLoading = true
         console.log(this.listQuery)
-        courseList(this.listQuery).then(response => {
-          console.log(response)
+        courseTypeList(this.listQuery).then(response => {
           this.tableData = response.data.item;
           this.total = response.data.total;
 
@@ -140,12 +123,12 @@
 
       handleDelete(index, row) {
         console.log(index, row);
-        this.$confirm('此操作将永久删除, 是否继续?', '提示', {
+        this.$confirm('此操作将永久删除分类下所有课程, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          delCourse(index.id).then(response => {
+          delCourseType(index.id).then(response => {
           this.$notify({
             message: '删除成功',
             type: 'success',
