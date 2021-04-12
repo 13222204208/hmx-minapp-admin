@@ -223,7 +223,7 @@ export const constantRoutes = [
         path: 'list',
         name: 'CourseTypeList',
         component: () => import('@/views/course_type/list'),
-        meta: { title: '课程分类', icon: 'el-icon-video-camera-solid' }
+        meta: { title: '课程分类', icon: 'el-icon-printer' }
       },
       {
         path: 'create',
