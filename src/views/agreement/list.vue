@@ -25,7 +25,10 @@
      </el-table-column>
      <el-table-column label="协议类型" align="center">
        <template slot-scope="{row}">
-         <span>{{ row.type=='about'?'关于我们':'隐私权益'}}</span>
+    <!--     <span>{{ row.type=='about'?'关于我们':'隐私权益'}}</span> -->
+        <span v-if="row.type=='about'">关于我们</span>
+        <span v-if="row.type=='service'">服务协议</span>
+        <span v-if="row.type=='privacy'">隐私权益</span>
        </template>
      </el-table-column>
 

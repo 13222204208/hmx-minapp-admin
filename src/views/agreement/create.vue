@@ -5,6 +5,7 @@
     <el-select v-model="form.type" placeholder="请选择协议类型" style="width: 58rem;">
       <el-option label="关于我们" value="about"></el-option>
       <el-option label="隐私权益" value="privacy"></el-option>
+        <el-option label="服务协议" value="service"></el-option>
     </el-select>
   </el-form-item>
   <el-form-item label="标题" prop="title"  style="width: 63rem;">
